@@ -386,12 +386,10 @@ The final use of JSON combinators is to extract all the `name` fields from
 the list of authors. We first construct the `author list`, and then `map` it
 into a `string list`. Notice that the example explicitly binds `authors` to a
 variable name. It can also be written more succinctly using the pipe-forward
-operator:
+operator and Yojson map combinator:
 
 ```ocaml env=parse_book
-# let names =
-    json |> member "authors" |> to_list
-  |> List.map ~f:(fun json -> member "name" json |> to_string)
+# let names = json |> member "authors" |> map (member "name") |> to_list |> filter_string
 val names : string list =
   ["Jason Hickey"; "Anil Madhavapeddy"; "Yaron Minsky"]
 ```
